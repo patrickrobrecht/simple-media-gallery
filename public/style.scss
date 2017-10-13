@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+// Colors
+@import "../node_modules/materialize-css/sass/components/color";
+
+// Variables;
+@import "../node_modules/materialize-css/sass/components/variables";
+
+// components
+@import "../node_modules/materialize-css/sass/components/global";
+@import "../node_modules/materialize-css/sass/components/grid";
+@import "../node_modules/materialize-css/sass/components/navbar";
+@import "../node_modules/materialize-css/sass/components/typography";
+@import "../node_modules/materialize-css/sass/components/cards";
+@import "../node_modules/materialize-css/sass/components/materialbox";
+@import "../node_modules/materialize-css/sass/components/sideNav";
+
+// Material icons (only the one actually used)
+.icon {
+  font-size: 24px;
+  padding-right: 24px;
+}
+
+.menu-icon {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAQAAABKfvVzAAAAGklEQVQ4y2NgGAVEg/9EAMo0jHp61NOjAAgAUWrXKeQhPE4AAAAASUVORK5CYII=) no-repeat;
+}

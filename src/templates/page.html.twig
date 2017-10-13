@@ -1,0 +1,50 @@
+{% extends "default.html.twig" %}
+
+{% block main %}
+    <div class="row">
+        {% if files and files|length > 0 %}
+            {% for file in files %}
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-image">
+                            {% if file.type starts with 'image' %}
+                                <img class="materialboxed responsive-img" src="{{ file.src }}" alt="{{ file.caption }}" data-caption="{{ file.caption }}">
+                            {% elseif file.type starts with 'video' %}
+                                <video class="responsive-video" controls>
+                                    <source src="{{ file.src }}" type="{{ file.type }}">
+                                </video>
+                            {% endif %}
+                        </div>
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col s12 m9">
+                                    {% if file.caption and file.type starts with 'video' %}
+                                        <p>Video: {{ file.caption }}</p>
+                                    {% else %}
+                                        <p>{{ file.caption }}</p>
+                                    {% endif %}
+                                </div>
+                                <div class="col s12 m3 right-align">
+                                    {% if file.date %}
+                                        <p><small>{{ file.date|date('d.m.Y H:i') }}</small></p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <ul>
+                {% for item in menu %}
+                    <li><a href="{{ item.link }}">{{ item.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script>$('.materialboxed').materialbox();</script>
+{% endblock %}

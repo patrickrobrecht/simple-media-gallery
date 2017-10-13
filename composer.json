@@ -1,0 +1,22 @@
+{
+    "name": "patrickrobrecht/simple-media-gallery",
+    "description": "A media gallery made with PHP in Material Design",
+    "version": "1.0.0",
+    "type": "project",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Patrick Robrecht",
+            "homepage": "https://patrick-robrecht.de/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "twig/twig": "2.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "SimpleMediaGallery\\": "src/"
+        }
+    }
+}

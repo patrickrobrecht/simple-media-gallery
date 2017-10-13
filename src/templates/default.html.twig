@@ -1,0 +1,63 @@
+{% spaceless %}
+<!DOCTYPE html>
+<html lang="de-DE">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="public/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="/" class="brand-logo center">{{ title }}</a>
+                <a href="#" data-activates="mobile-nav" class="button-collapse show-on-large"><span class="icon menu-icon">&nbsp;</span></a>
+                <ul id="mobile-nav" class="side-nav">
+                    <li><a href="index.html">Startseite</a></li>
+                    {% for item in menu %}
+                        <li><a href="{{ item.link }}"> {{ item.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            {% block main %}
+                <p>{{ text }}</p>
+            {% endblock %}
+        </div>
+    </main>
+    <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    {% if footer %}
+                        <p class="flow-text">{{ footer }}</p>
+                    {% endif %}
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <ul>
+                        {% for item in menu %}
+                            <li><a class="grey-text text-lighten-3" href="{{ item.link }}">{{ item.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% if copyright %}
+            <div class="footer-copyright">
+                <div class="container">© {{ copyright }}</div>
+            </div>
+        {% endif %}
+    </footer>
+    {% block scripts %}
+        <script src="public/jquery.min.js"></script>
+        <script src="public/materialize.min.js"></script>
+        <script>$(".button-collapse").sideNav();</script>
+    {% endblock %}
+</body>
+</html>
+{% endspaceless %}
+
+<!-- Generated {{ "now"|date('d.m.Y H:i:s') }} -->
