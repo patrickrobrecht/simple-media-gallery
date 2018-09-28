@@ -7,14 +7,14 @@ use Twig_Loader_Filesystem;
 class Gallery {
     private $copyright;
     private $dataDirectory;
-    private $footer;
+	private $siteTitle;
     private $title;
 
     public function __construct() {
         $this->copyright     = defined('COPYRIGHT') ? htmlspecialchars(COPYRIGHT) : '';
         $this->dataDirectory = defined('DATA') ? DATA : 'data';
-        $this->footer        = defined('FOOTER') ? htmlspecialchars(FOOTER) : '';
-        $this->title         = defined('TITLE') ? htmlspecialchars(TITLE) : 'Bildergalerie';
+	    $this->siteTitle     = defined('TITLE') ? htmlspecialchars(TITLE) : 'Bildergalerie';
+        $this->title         = $this->siteTitle;
     }
 
     private function getFiles($directory) {
@@ -122,8 +122,8 @@ class Gallery {
             [
                 'copyright' => $this->copyright,
                 'files' => $this->getFiles($path),
-                'footer' => $this->footer,
                 'menu' => $this->getMenu(),
+                'siteTitle' => $this->siteTitle,
                 'title' => ($path === '' ? $this->title : self::extractName(pathinfo($path, PATHINFO_FILENAME))),
             ]
         );
@@ -133,8 +133,8 @@ class Gallery {
         return $this->getTwig()->render('default.html.twig',
             [
                 'copyright' => $this->copyright,
-                'footer' => $this->footer,
                 'menu' => $this->getMenu(),
+                'siteTitle' => $this->siteTitle,
                 'title' => $this->title,
                 'text' => $text
             ]

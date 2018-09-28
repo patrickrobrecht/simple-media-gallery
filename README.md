@@ -19,17 +19,17 @@ If you run another webserver, you have to create rules equivalent to `.htacess` 
 ### Media file names
  * The names of the media files must not contain spaces or non English characters.
  * Naming them `YYYYMMDD_HHmmss-Hello-World.jpg` will automatically add a caption `Hello World` and a date `DD.MM.YYYY hh:mm` below the media files.
- * For jpg the caption and date is extracted from the image metadata if set.
+ * For `jpg` the caption and date is extracted from the image metadata if set.
 
 ### Supported media formats
- * images: jpg, png images
- * videos: mp4 and ogg
+ * images: `jpg`, `png`
+ * videos: `mp4`, `ogg` 
 
 ### Configuration file
 Options are set via `define(<option-name>, <option-value>)`: 
  * `CACHE`: set to `true` to enable caching (default value: `false`, i. e. no caching).
  * `DATA`: set the data directory (default value: `data`)
- * `TITLE`, `FOOTER`, `COPYRIGHT`: Add your Texts for the headline, footer text and copyright line.
+ * `TITLE`, `COPYRIGHT`: Add your Texts for the site title and copyright line.
 
 Compare the `config.sample.php` for example values.
 
@@ -40,8 +40,8 @@ To empty the cache, just delete the HTML files created in the root directory.
 ## Development
 
 ### Requirements
- * [Node.js](https://nodejs.org/en/download/) 6+ and [npm](https://www.npmjs.com/) 5+
- * [Composer](https://getcomposer.org/) 1.5+
+ * [Node.js](https://nodejs.org/en/download/) 10+ and [npm](https://www.npmjs.com/) 6+
+ * [Composer](https://getcomposer.org/) 1.7+
  * Apache and PHP as stated above
 
 ### Setup guide for local development environment
@@ -50,7 +50,7 @@ To empty the cache, just delete the HTML files created in the root directory.
  * Run `npm install` to install the node dependencies.
     `npm run postinstall` is executed automatically after installation.
     This command will compile `style.scss` to `style.css`
-    and copy the necessary files to the public directory and also compile  
+    and copy the necessary files to the `public` directory.
  * Run `composer install` to install the composer dependencies.
  * Start a webserver and point the webroot to the the root of the repository.
  * Open the directory in the browser. 

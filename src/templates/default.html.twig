@@ -7,54 +7,36 @@
     <link rel="stylesheet" href="public/style.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="nav-wrapper">
-                <a href="/" class="brand-logo center">{{ title }}</a>
-                <a href="#" data-activates="mobile-nav" class="button-collapse show-on-large"><span class="icon menu-icon">&nbsp;</span></a>
-                <ul id="mobile-nav" class="side-nav">
-                    <li><a href="index.html">Startseite</a></li>
+    <header class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">{{ siteTitle }}</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
                     {% for item in menu %}
-                        <li><a href="{{ item.link }}"> {{ item.name }}</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="{{ item.link }}"> {{ item.name }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
         </nav>
     </header>
-    <main>
-        <div class="container">
-            {% block main %}
-                <p>{{ text }}</p>
-            {% endblock %}
-        </div>
+    <main class="container">
+        <h1 class="text-center">{{ title }}</h1>
+        {% block main %}
+            <p>{{ text }}</p>
+        {% endblock %}
     </main>
-    <footer class="page-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col l6 s12">
-                    {% if footer %}
-                        <p class="flow-text">{{ footer }}</p>
-                    {% endif %}
-                </div>
-                <div class="col l4 offset-l2 s12">
-                    <ul>
-                        {% for item in menu %}
-                            <li><a class="grey-text text-lighten-3" href="{{ item.link }}">{{ item.name }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <footer class="container text-muted">
         {% if copyright %}
-            <div class="footer-copyright">
-                <div class="container">© {{ copyright }}</div>
-            </div>
+            <p class="text-center">© {{ copyright }}</p>
         {% endif %}
     </footer>
     {% block scripts %}
         <script src="public/jquery.min.js"></script>
-        <script src="public/materialize.min.js"></script>
-        <script>$(".button-collapse").sideNav();</script>
+        <script src="public/bootstrap.min.js"></script>
     {% endblock %}
 </body>
 </html>

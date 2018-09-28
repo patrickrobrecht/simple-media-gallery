@@ -1,50 +1,46 @@
 {% extends "default.html.twig" %}
 
 {% block main %}
-    <div class="row">
-        {% if files and files|length > 0 %}
-            {% for file in files %}
-                <div class="col s12">
-                    <div class="card">
-                        <div class="card-image">
-                            {% if file.type starts with 'image' %}
-                                <img class="materialboxed responsive-img" src="{{ file.src }}" alt="{{ file.caption }}" data-caption="{{ file.caption }}">
-                            {% elseif file.type starts with 'video' %}
-                                <video class="responsive-video" controls>
-                                    <source src="{{ file.src }}" type="{{ file.type }}">
-                                </video>
-                            {% endif %}
-                        </div>
-                        <div class="card-content">
-                            <div class="row">
-                                <div class="col s12 m9">
-                                    {% if file.caption and file.type starts with 'video' %}
-                                        <p>Video: {{ file.caption }}</p>
-                                    {% else %}
-                                        <p>{{ file.caption }}</p>
-                                    {% endif %}
-                                </div>
-                                <div class="col s12 m3 right-align">
-                                    {% if file.date %}
-                                        <p><small>{{ file.date|date('d.m.Y H:i') }}</small></p>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <ul>
-                {% for item in menu %}
-                    <li><a href="{{ item.link }}">{{ item.name }}</a></li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    </div>
-{% endblock %}
+    {% if files and files|length > 0 %}
+        <div id="carouselSlideShow" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                {% for file in files %}
+                    <div class="carousel-item {% if loop.first %}active{% endif %}">
+                        {% if file.type starts with 'image' %}
+                            <img class="d-block w-100" src="{{ file.src }}" alt="{{ file.caption }}">
+                        {% elseif file.type starts with 'video' %}
+                            <video class="d-block w-100" controls>
+                                <source src="{{ file.src }}" type="{{ file.type }}">
+                            </video>
+                        {% endif %}
 
-{% block scripts %}
-    {{ parent() }}
-    <script>$('.materialboxed').materialbox();</script>
+                        {% if file.caption or file.date %}
+                            <div class="carousel-caption">
+                                {% if file.caption %}
+                                    <p>{{ file.caption }}</p>
+                                {% endif %}
+                                {% if file.date %}
+                                    <p>{{ file.date|date('d.m.Y H:i') }}</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#carouselSlideShow" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselSlideShow" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    {% else %}
+        <ul>
+            {% for item in menu %}
+                <li class="nav-item"><a href="{{ item.link }}">{{ item.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}

@@ -1,17 +1,19 @@
 {
-    "name": "simple-media-gallery",
-    "description": "Just for installing dependencies via npm. See composer.json for more details.",
-    "dependencies": {
-        "materialize-css": "^0.100.2"
-    },
-    "devDependencies": {
-        "copyfiles": "^1.2.0",
-        "node-sass": "^4.5.3"
-    },
-    "scripts": {
-        "postinstall": "npm run sass && npm run copy-js1 && npm run copy-js2",
-        "sass": "node-sass public/style.scss public/style.css",
-        "copy-js1": "copyfiles -f node_modules/materialize-css/dist/js/materialize.min.js public",
-        "copy-js2": "copyfiles -f node_modules/jquery/dist/jquery.min.js public"
-    }
+  "name": "simple-media-gallery",
+  "description": "Just for installing dependencies via npm. See composer.json for more details.",
+  "dependencies": {
+    "bootstrap": "^4.1.3",
+    "jquery": "^3.3.1"
+  },
+  "devDependencies": {
+    "copyfiles": "^1.2.0",
+    "sass": "^1.14.1"
+  },
+  "scripts": {
+    "postinstall": "npm run sass && npm run copy-js1 && npm run copy-js2",
+    "sass": "sass public/style.scss public/style.css --style compressed",
+    "sass-watch": "sass --watch public/style.scss public/style.css",
+    "copy-js1": "copyfiles -f node_modules/bootstrap/dist/js/bootstrap.min.js public",
+    "copy-js2": "copyfiles -f node_modules/jquery/dist/jquery.min.js public"
+  }
 }

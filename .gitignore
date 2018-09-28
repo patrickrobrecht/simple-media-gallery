@@ -3,7 +3,7 @@ config.php
 data
 data-test
 node_modules
-public/jquery.min.js
-public/materialize.min.js
-public/style.css
+public/*.min.js
+public/*.css
+public/*.map
 vendor
