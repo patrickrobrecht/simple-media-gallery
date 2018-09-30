@@ -2,6 +2,8 @@
 
 namespace SimpleMediaGallery\pages;
 
+use SimpleMediaGallery\Configuration;
+
 /**
  * A GalleryPage displays the media within one directory.
  *
@@ -81,7 +83,7 @@ class GalleryPage extends Page {
 		return [
 			'caption' => $caption,
 			'date'    => $date,
-			'src'     => (defined( 'DATA' ) ? DATA : 'data') . '/' . str_replace( $this->dataDirectory, '', $file ),
+			'src'     => Configuration::getDataDirectoryRelativePath() . str_replace( $this->dataDirectory, '', $file ),
 			'type'    => $type,
 		];
 	}

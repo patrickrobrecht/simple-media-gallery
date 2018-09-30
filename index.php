@@ -5,11 +5,17 @@ if ( file_exists( __DIR__ . '/config.php' ) ) {
 require __DIR__ . '/vendor/autoload.php';
 
 use SimpleMediaGallery\Gallery;
+use SimpleMediaGallery\Configuration;
 
 // Determine path relative to the root directory.
 $path = substr( $_SERVER['REQUEST_URI'], 1 );
-if ( defined( 'SUBDIRECTORY' ) && SUBDIRECTORY ) {
-	$path = preg_replace( '/' . preg_quote( SUBDIRECTORY, '/' ) . '/', '', $path, 1 );
+if ( Configuration::isSubDirectoryInstall() ) {
+	$path = preg_replace(
+		'/' . preg_quote( Configuration::getSubDirectory(), '/' ) . '/',
+		'',
+		$path,
+		1
+	);
 }
 
 $gallery = new Gallery();
@@ -22,7 +28,7 @@ if ( ! $gallery->isDirectory( $path ) ) {
 	$cacheFile     = $cacheFilePath . 'index.html';
 
 	// Serve cached version if cache is active.
-	if ( defined( 'CACHE' ) && CACHE && file_exists( $cacheFile ) ) {
+	if ( Configuration::isCachingEnabled() && file_exists( $cacheFile ) ) {
 		echo file_get_contents( $cacheFile );
 		echo '<!-- Served from cache -->';
 	} else {

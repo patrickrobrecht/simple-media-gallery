@@ -2,6 +2,8 @@
 
 namespace SimpleMediaGallery\Pages;
 
+use SimpleMediaGallery\Configuration;
+
 /**
  * A Page displays content.
  *
@@ -9,17 +11,13 @@ namespace SimpleMediaGallery\Pages;
  */
 abstract class Page {
 	protected $dataDirectory;
-	private $copyright;
 	private $pageTitle;
-	private $siteTitle;
 	private $root;
 
 	public function __construct( $title = null ) {
-		$this->dataDirectory = dirname(__DIR__, 2) . '/' . (defined( 'DATA' ) ? DATA : 'data') . '/';
-		$this->copyright     = defined( 'COPYRIGHT' ) ? htmlspecialchars( COPYRIGHT ) : '';
-		$this->siteTitle     = defined( 'TITLE' ) ? htmlspecialchars( TITLE ) : 'Media Gallery';
-		$this->pageTitle     = is_null( $title ) ? $this->siteTitle : $title;
-		$this->root          = '/' . ( defined( 'SUBDIRECTORY' ) ? SUBDIRECTORY : '' );
+		$this->dataDirectory = Configuration::getDataDirectoryLocalAbsolutePath();
+		$this->pageTitle     = is_null( $title ) ? $this->getSiteTitle() : $title;
+		$this->root          = Configuration::getWebRoot();
 	}
 
 	protected function getSubPages( $directory ) {
@@ -53,7 +51,7 @@ abstract class Page {
 	}
 
 	public function getCopyright() {
-		return $this->copyright;
+		return Configuration::getCopyright();
 	}
 
 	public function getMenu() {
@@ -65,7 +63,7 @@ abstract class Page {
 	}
 
 	public function getSiteTitle() {
-		return $this->siteTitle;
+		return Configuration::getSiteTitle();
 	}
 
 	public function getRoot() {
