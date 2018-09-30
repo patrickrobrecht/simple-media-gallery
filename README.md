@@ -35,8 +35,8 @@ Compare the `config.sample.php` for example values.
  * For `jpg` images the caption and date is extracted from the image metadata if set.
 
 ### Supported media formats
- * images: `jpg`, `png`
- * videos: `mp4`, `ogg` 
+ * images: `jpg`, `gif`, `png`
+ * videos: `mp4`, `ogg`, `webm`
 
 ### Clear cache
 To empty the cache, just delete the HTML files created in the `cache` directory.

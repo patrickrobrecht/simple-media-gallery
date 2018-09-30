@@ -6,3 +6,44 @@
     Rewritecond %{REQUEST_FILENAME} !/public
     RewriteRule ^ index.php [QSA,L]
 </IfModule>
+
+<IfModule mod_mime.c>
+    # MIME types
+
+	AddType text/css .css
+	AddType text/javascript	.js
+    AddType text/html .html .htm .php
+
+    AddType image/jpeg .jpeg .jpg .JPG
+	AddType image/gif .gif .GIF
+	AddType image/png .png .PNG
+
+	AddType video/ogg .ogv .ogg
+	AddType video/mp4 .mp4
+	AddType video/webm .webm
+</IfModule>
+
+<IfModule mod_expires.c>
+    # Expires header for caching
+
+	ExpiresActive On
+	ExpiresDefault "access plus 1 hour"
+
+	ExpiresByType text/css "access plus 1 week"
+	ExpiresByType text/javascript "access plus 1 week"
+
+	ExpiresByType image/jpeg "access plus 1 week"
+	ExpiresByType image/gif "access plus 1 week"
+	ExpiresByType image/png "access plus 1 week"
+
+	ExpiresByType video/mp4 "access plus 1 week"
+	ExpiresByType video/ogg "access plus 1 week"
+	ExpiresByType video/webm "access plus 1 week"
+</IfModule>
+
+<IfModule mod_filter.c>
+    # Enable gzip compression
+
+    SetOutputFilter DEFLATE
+	AddOutputFilterByType DEFLATE text/html text/css text/javascript
+</IfModule>

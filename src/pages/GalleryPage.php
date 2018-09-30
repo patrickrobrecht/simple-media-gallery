@@ -41,7 +41,7 @@ class GalleryPage extends Page {
 
 		$extension = strtolower( pathinfo( $file, PATHINFO_EXTENSION ) );
 		if ( in_array( $extension, [ 'jpg', 'jpeg' ] ) ) {
-			$type = 'image/jpg';
+			$type = 'image/jpeg';
 			$exif = exif_read_data( $file, 'FILE' );
 			if ( $exif ) {
 				if ( isset( $exif['ImageDescription'] ) ) {
@@ -53,12 +53,10 @@ class GalleryPage extends Page {
 					$date = $exif['FileDateTime'];
 				}
 			}
-		} elseif ( in_array( $extension, [ 'png' ] ) ) {
-			$type = 'image/png';
-		} elseif ( in_array( $extension, [ 'mp4' ] ) ) {
-			$type = 'video/mp4';
-		} elseif ( in_array( $extension, [ 'ogg' ] ) ) {
-			$type = 'video/ogg';
+		} elseif ( in_array( $extension, [ 'png', 'gif' ] ) ) {
+			$type = 'image/' . $extension;
+		} elseif ( in_array( $extension, [ 'mp4', 'ogg', 'webm' ] ) ) {
+			$type = 'video/' . $extension;
 		} else {
 			return null;
 		}
