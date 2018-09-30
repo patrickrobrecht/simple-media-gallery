@@ -3,40 +3,40 @@
 <html lang="de-DE">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title }}</title>
-    <link rel="stylesheet" href="public/style.css">
+    <title>{{ page.pageTitle }}</title>
+    <link rel="stylesheet" href="{{ page.root }}public/style.css">
 </head>
 <body>
     <header class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="/">{{ siteTitle }}</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="{{ page.root }}">{{ page.siteTitle }}</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav mr-auto">
-                    {% for item in menu %}
-                        <li class="nav-item active"><a class="nav-link" href="{{ item.link }}"> {{ item.name }}</a></li>
+                    {% for item in page.menu %}
+                        <li class="nav-item"><a class="nav-link" href="{{ page.root }}{{ item.link }}"> {{ item.name }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
         </nav>
     </header>
     <main class="container">
-        <h1 class="text-center">{{ title }}</h1>
+        <h1 class="text-center">{{ page.pageTitle }}</h1>
         {% block main %}
-            <p>{{ text }}</p>
+            <p>{{ page.text }}</p>
         {% endblock %}
     </main>
     <footer class="container text-muted">
-        {% if copyright %}
-            <p class="text-center">© {{ copyright }}</p>
+        {% if page.copyright %}
+            <p class="text-center">© {{ page.copyright }}</p>
         {% endif %}
     </footer>
     {% block scripts %}
-        <script src="public/jquery.min.js"></script>
-        <script src="public/bootstrap.min.js"></script>
+        <script src="{{ page.root }}public/jquery.min.js"></script>
+        <script src="{{ page.root }}public/bootstrap.min.js"></script>
     {% endblock %}
 </body>
 </html>

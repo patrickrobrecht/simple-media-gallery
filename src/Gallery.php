@@ -1,147 +1,48 @@
 <?php
+
 namespace SimpleMediaGallery;
 
+use SimpleMediaGallery\pages\DefaultPage;
+use SimpleMediaGallery\pages\GalleryPage;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 
+/**
+ * The main class generating the pages.
+ *
+ * @package SimpleMediaGallery
+ */
 class Gallery {
-    private $copyright;
-    private $dataDirectory;
-	private $siteTitle;
-    private $title;
+	private $dataDirectory;
 
-    public function __construct() {
-        $this->copyright     = defined('COPYRIGHT') ? htmlspecialchars(COPYRIGHT) : '';
-        $this->dataDirectory = defined('DATA') ? DATA : 'data';
-	    $this->siteTitle     = defined('TITLE') ? htmlspecialchars(TITLE) : 'Bildergalerie';
-        $this->title         = $this->siteTitle;
-    }
+	public function __construct() {
+		$this->dataDirectory = defined( 'DATA' ) ? DATA : 'data';
+	}
 
-    private function getFiles($directory) {
-        $files = [];
-        $path = $this->dataDirectory . '/' . $directory;
-        foreach (glob($path . '/*') as $file) {
-            if (is_file($file)) {
-                $medium = self::createFileMetadata($file);
-                if (null !== $medium) {
-                    array_push($files, $medium);
-                }
-            }
-        }
-        return $files;
-    }
+	public function isDirectory( $path ) {
+		$path = $this->dataDirectory . '/' . $path;
 
-    private static function createFileMetadata($file) {
-        $date = '';
-        $caption = '';
+		return file_exists( $path ) && is_dir( $path );
+	}
 
-        $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-        if (in_array($extension, ['jpg', 'jpeg'])) {
-            $type = 'image/jpg';
-            $exif = exif_read_data($file, 'FILE');
-            if ($exif) {
-                if (isset($exif['ImageDescription'])) {
-                    $caption = $exif['ImageDescription'];
-                }
-                if (isset($exif['DateTimeOriginal'])) {
-                    $date = $exif['DateTimeOriginal'];
-                } elseif (isset($exif['FileDateTime'])) {
-                    $date = $exif['FileDateTime'];
-                }
-            }
-        } elseif (in_array($extension, ['png'])) {
-            $type = 'image/png';
-        } elseif (in_array($extension, ['mp4'])) {
-            $type = 'video/mp4';
-        } elseif (in_array($extension, ['ogg'])) {
-            $type = 'video/ogg';
-        } else {
-            return null;
-        }
+	public function getPage( $path ) {
+		return $this->getTwig()->render(
+			'page.html.twig',
+			[ 'page' => new GalleryPage( $path ) ]
+		);
+	}
 
-        $name = pathinfo($file, PATHINFO_FILENAME);
+	public function getErrorPage( $text ) {
+		return $this->getTwig()->render(
+			'default.html.twig',
+			[ 'page' => new DefaultPage( $text, $text ) ]
+		);
+	}
 
-        $dateString = '';
-        if (strlen($name) >= 15 && substr($name, 0, 15) && preg_match('/[0-9]{8}_[0-9]{6}/', $name)) {
-            $dateString = substr($name, 0, 15);
-        }
-        if ('' == $dateString && strlen($name) >= 13 && substr($name, 0, 13) && preg_match('/\d{8}_\d{4}/', $name)) {
-            $dateString = substr($name, 0, 13);
-        }
-        if ('' === $date && $dateString !== '') {
-            $date = date_create_from_format((strlen($date) === 15) ? 'Ymd_His' : $format = 'Ymd_Hi', $dateString);
-        }
-
-        if ('' === $caption) {
-            $caption = self::extractName(substr($name, strlen($dateString)));
-        }
-
-        return [
-            'caption' => $caption,
-            'date' => $date,
-            'src' => $file,
-            'type' => $type,
-        ];
-    }
-
-    public function isDirectory($path) {
-        $path = $this->dataDirectory . '/' . $path;
-        return file_exists($path) && is_dir($path);
-    }
-
-    private function getMenu() {
-        $menu = [];
-        foreach (glob($this->dataDirectory . '/*') as $file) {
-            if (is_dir($file)) {
-                $name = self::extractName(pathinfo($file, PATHINFO_FILENAME));
-                $item = [
-                    'name' => $name,
-                    'link' => str_replace('/', '', str_replace($this->dataDirectory, '', $file)) . '.html'
-                ];
-                array_push($menu, $item);
-            }
-        }
-        return $menu;
-    }
-
-    private static function extractName($name) {
-        // Remove digits at the beginning.
-        preg_match("~^(\d+)~", $name, $m);
-        if (count($m) > 0) {
-            $name = substr($name, strlen($m[0]));
-        }
-
-        // Replace _ and - with spaces.
-        $name = str_replace('_', ' ', $name);
-        $name = str_replace('-', ' ', $name);
-        return trim($name);
-    }
-
-    public function getPage($path) {
-        return $this->getTwig()->render('page.html.twig',
-            [
-                'copyright' => $this->copyright,
-                'files' => $this->getFiles($path),
-                'menu' => $this->getMenu(),
-                'siteTitle' => $this->siteTitle,
-                'title' => ($path === '' ? $this->title : self::extractName(pathinfo($path, PATHINFO_FILENAME))),
-            ]
-        );
-    }
-
-    public function getErrorPage($text) {
-        return $this->getTwig()->render('default.html.twig',
-            [
-                'copyright' => $this->copyright,
-                'menu' => $this->getMenu(),
-                'siteTitle' => $this->siteTitle,
-                'title' => $this->title,
-                'text' => $text
-            ]
-        );
-    }
-
-    private function getTwig() {
-        return new Twig_Environment(new Twig_Loader_Filesystem('src/templates'), ['cache' => false]);
-    }
+	private function getTwig() {
+		return new Twig_Environment(
+			new Twig_Loader_Filesystem( 'src/templates' ),
+			[ 'cache' => false ]
+		);
+	}
 }

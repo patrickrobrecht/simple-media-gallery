@@ -1,9 +1,6 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    ## Redirect root to index.html
-    RewriteRule ^$ /index.html [L,R=301]
-
     ## Redirect requests to index.php (except data and public directory).
     Rewritecond %{REQUEST_FILENAME} !/data
     Rewritecond %{REQUEST_FILENAME} !/public

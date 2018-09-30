@@ -1,16 +1,22 @@
 {% extends "default.html.twig" %}
 
 {% block main %}
-    {% if files and files|length > 0 %}
+    <ul class="nav justify-content-center">
+        {% for item in page.children %}
+            <li class="nav-item"><a class="nav-link" href="{{ page.root }}{{ item.link }}">{{ item.name }}</a></li>
+        {% endfor %}
+    </ul>
+
+    {% if page.files and page.files|length > 0 %}
         <div id="carouselSlideShow" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
-                {% for file in files %}
+                {% for file in page.files %}
                     <div class="carousel-item {% if loop.first %}active{% endif %}">
                         {% if file.type starts with 'image' %}
-                            <img class="d-block w-100" src="{{ file.src }}" alt="{{ file.caption }}">
+                            <img class="d-block w-100" src="{{ page.root }}{{ file.src }}" alt="{{ file.caption }}">
                         {% elseif file.type starts with 'video' %}
                             <video class="d-block w-100" controls>
-                                <source src="{{ file.src }}" type="{{ file.type }}">
+                                <source src="{{ page.root }}{{ file.src }}" type="{{ file.type }}">
                             </video>
                         {% endif %}
 
@@ -36,11 +42,5 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
-    {% else %}
-        <ul>
-            {% for item in menu %}
-                <li class="nav-item"><a href="{{ item.link }}">{{ item.name }}</a></li>
-            {% endfor %}
-        </ul>
     {% endif %}
 {% endblock %}
