@@ -8,7 +8,7 @@
 </head>
 <body>
     <header class="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <a class="navbar-brand" href="{{ page.root }}">{{ page.siteTitle }}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -17,7 +17,19 @@
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav mr-auto">
                     {% for item in page.menu %}
-                        <li class="nav-item"><a class="nav-link" href="{{ page.root }}{{ item.link }}"> {{ item.name }}</a></li>
+                        {% if item.menu %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown">{{ item.name }}</a>
+                                <ul class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ page.root }}{{ item.link }}"> {{ item.name }}</a>
+                                    {% for subitem in item.menu %}
+                                        <li><a class="dropdown-item" href="{{ page.root }}{{ subitem.link }}"> {{ subitem.name }}</a>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li class="nav-item"><a class="nav-link" href="{{ page.root }}{{ item.link }}"> {{ item.name }}</a></li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             </div>

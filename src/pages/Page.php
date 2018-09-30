@@ -20,7 +20,7 @@ abstract class Page {
 		$this->root          = Configuration::getWebRoot();
 	}
 
-	protected function getSubPages( $directory ) {
+	protected function getPages( $directory, $includeSubPages = 0 ) {
 		$menu = [];
 		foreach ( glob( $directory . '*' ) as $file ) {
 			if ( is_dir( $file ) ) {
@@ -29,6 +29,9 @@ abstract class Page {
 					'name' => $name,
 					'link' => str_replace( $this->dataDirectory, '', $file ) . '/'
 				];
+				if ( $includeSubPages > 0 ) {
+					$item['menu'] = $this->getPages( $file. '/', $includeSubPages - 1 );
+				}
 				array_push( $menu, $item );
 			}
 		}
@@ -55,7 +58,7 @@ abstract class Page {
 	}
 
 	public function getMenu() {
-		return $this->getSubPages( $this->dataDirectory );
+		return $this->getPages( $this->dataDirectory, 1 );
 	}
 
 	public function getPageTitle() {

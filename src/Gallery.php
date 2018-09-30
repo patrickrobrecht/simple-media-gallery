@@ -13,14 +13,9 @@ use Twig_Loader_Filesystem;
  * @package SimpleMediaGallery
  */
 class Gallery {
-	private $dataDirectory;
-
-	public function __construct() {
-		$this->dataDirectory = defined( 'DATA' ) ? DATA : 'data';
-	}
 
 	public function isDirectory( $path ) {
-		$path = $this->dataDirectory . '/' . $path;
+		$path = Configuration::getDataDirectoryLocalAbsolutePath() . $path;
 
 		return file_exists( $path ) && is_dir( $path );
 	}

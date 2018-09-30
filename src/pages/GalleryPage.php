@@ -18,7 +18,7 @@ class GalleryPage extends Page {
 	}
 
 	public function getChildren() {
-		return $this->getSubPages( $this->dataPath );
+		return $this->getPages( $this->dataPath );
 	}
 
 	public function getFiles() {
