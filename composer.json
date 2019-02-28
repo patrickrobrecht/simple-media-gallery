@@ -12,6 +12,8 @@
         }
     ],
     "require": {
+        "php": "^7",
+        "ext-exif": "*",
         "twig/twig": "2.4"
     },
     "autoload": {
