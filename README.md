@@ -45,8 +45,8 @@ To empty the cache, just delete the HTML files created in the `cache` directory.
 ## Development
 
 ### Requirements
- * [Node.js](https://nodejs.org/en/download/) 10+ and [npm](https://www.npmjs.com/) 6+
- * [Composer](https://getcomposer.org/) 1.7+
+ * [Node.js](https://nodejs.org/en/download/) 10+ and [npm](https://www.npmjs.com/) 6.9+
+ * [Composer](https://getcomposer.org/) 1.9+
  * Apache and PHP as stated above
 
 ### Setup guide for local development environment
