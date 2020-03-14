@@ -21,7 +21,7 @@ if ( Configuration::isSubDirectoryInstall() ) {
 $gallery = new Gallery();
 if ( ! $gallery->isDirectory( $path ) ) {
 	// Return 404 page for invalid requests.
-	header( "HTTP/1.0 404 Not Found" );
+	header('HTTP/1.0 404 Not Found');
 	echo $gallery->getErrorPage( 'Page Not Found' );
 } else {
 	$cacheFilePath = __DIR__ . '/cache/' . $path;
@@ -37,9 +37,11 @@ if ( ! $gallery->isDirectory( $path ) ) {
 
 		// Create new cache file.
 		if ( ! is_dir( $cacheFilePath ) ) {
-			mkdir( $cacheFilePath, 0400, true );
+            if ( ! mkdir($cacheFilePath, 0400, true) && ! is_dir($cacheFilePath)) {
+                throw new RuntimeException(sprintf('Directory "%s" was not created', $cacheFilePath));
+            }
 		}
-		$file = fopen( $cacheFile, 'w+' );
+		$file = fopen( $cacheFile, 'wb+');
 		if ( $file ) {
 			fwrite( $file, $page );
 			fclose( $file );

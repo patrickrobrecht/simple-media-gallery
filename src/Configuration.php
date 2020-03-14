@@ -9,35 +9,43 @@ namespace SimpleMediaGallery;
  */
 class Configuration {
 
-	public static function isCachingEnabled() {
+	public static function isCachingEnabled(): bool
+    {
 		return defined( 'CACHE' ) && CACHE;
 	}
 
-	public static function getDataDirectoryLocalAbsolutePath() {
+	public static function getDataDirectoryLocalAbsolutePath(): string
+    {
 		return dirname( __DIR__, 1 ) . '/' . ( defined( 'DATA' ) ? DATA : 'data' ) . '/';
 	}
 
-	public static function getDataDirectoryRelativePath() {
+	public static function getDataDirectoryRelativePath(): string
+    {
 		return ( defined( 'DATA' ) ? DATA : 'data' ) . '/';
 	}
 
-	public static function isSubDirectoryInstall() {
+	public static function isSubDirectoryInstall(): bool
+    {
 		return defined( 'SUBDIRECTORY' ) && SUBDIRECTORY;
 	}
 
-	public static function getSubDirectory() {
+	public static function getSubDirectory(): string
+    {
 		return defined( 'SUBDIRECTORY' ) ? SUBDIRECTORY : '';
 	}
 
-	public static function getWebRoot() {
+	public static function getWebRoot(): string
+    {
 		return '/' . self::getSubDirectory();
 	}
 
-	public static function getSiteTitle() {
+	public static function getSiteTitle(): string
+    {
 		return defined( 'TITLE' ) ? htmlspecialchars( TITLE ) : 'Media Gallery';
 	}
 
-	public static function getCopyright() {
+	public static function getCopyright(): string
+    {
 		return defined( 'COPYRIGHT' ) ? htmlspecialchars( COPYRIGHT ) : '';
 	}
 }

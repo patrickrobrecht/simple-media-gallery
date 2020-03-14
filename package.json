@@ -1,13 +1,11 @@
 {
-  "name": "simple-media-gallery",
-  "description": "Just for installing dependencies via npm. See composer.json for more details.",
-  "dependencies": {
-    "bootstrap": "^4.3.1",
-    "jquery": "^3.4.1"
-  },
+  "private": true,
   "devDependencies": {
-    "copyfiles": "^1.2.0",
-    "sass": "^1.22.10"
+    "bootstrap": "^4.4.1",
+    "copyfiles": "^2.2.0",
+    "jquery": "^3.4.1",
+    "minimist": ">=1.2.2",
+    "sass": "^1.26.3"
   },
   "scripts": {
     "postinstall": "npm run sass && npm run copy-js1 && npm run copy-js2",

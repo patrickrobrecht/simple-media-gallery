@@ -1,7 +1,6 @@
 {
     "name": "patrickrobrecht/simple-media-gallery",
     "description": "A media gallery made with PHP in Material Design",
-    "version": "1.0.0",
     "type": "project",
     "license": "GPL-3.0",
     "authors": [
@@ -12,9 +11,12 @@
         }
     ],
     "require": {
-        "php": "^7",
+        "php": "^7.4",
         "ext-exif": "*",
-        "twig/twig": "^2.9.0"
+        "twig/twig": "^3.0.3"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master"
     },
     "autoload": {
         "psr-4": {
