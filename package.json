@@ -3,7 +3,7 @@
   "devDependencies": {
     "bootstrap": "^4.4.1",
     "copyfiles": "^2.2.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "minimist": ">=1.2.2",
     "sass": "^1.26.3"
   },
